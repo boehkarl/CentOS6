@@ -1,5 +1,9 @@
 #Iptables rules for CentOS6 central log server
 
+# Drop all input and forward
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+
 # ensure loopback is good 
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
@@ -24,6 +28,5 @@ iptables -A INPUT -i eth0 -p udp --dport 514 -m state --state NEW,ESTABLISHED -j
 iptables -A INPUT -i eth0 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j DROP
 iptables -A OUTPUT -o eth0 -p tcp --dport 22 -m state --state ESTABLISHED -j DROP
 
-# Drop all input and forward
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
+service iptables save
+service iptables restart

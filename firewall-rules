@@ -18,7 +18,7 @@ iptables -A OUTPUT -o eth0 -p tcp --sport 8000 -m state --state ESTABLISHED -j A
 iptables -A INPUT -i eth0 -p tcp --dport 9997 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i eth0 -p tcp --dport 9998 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i eth0 -p tcp --dport 601 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A INPUT -i eth0 -p udp --port 514 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A INPUT -i eth0 -p udp --dport 514 -m state --state NEW,ESTABLISHED -j ACCEPT
 
 # Kill SSH traffic
 iptables -A INPUT -i eth0 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j DROP

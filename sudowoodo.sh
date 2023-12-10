@@ -10,7 +10,9 @@ counter(){
 rock_throw(){
   grep -E '\b([0-9]{1,3}\.){3}[0-9]{1-3}\b' $1
 }
-
+secret_funct(){
+  echo "Hi"
+}
 #display menu for if user enters no arguments or bad arguments
 menu(){
   echo "MENU"
@@ -25,7 +27,7 @@ echo "Sudowoodo : )"
 case $2 in
   s) counter $1;;
   i) rock_throw $1;;
-  x) secret_funct $1;;
+  x) secret_funct;;
   "") menu;;
   *) menu;;
 esac

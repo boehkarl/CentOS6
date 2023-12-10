@@ -8,3 +8,7 @@ chmod 755 repos.sh firewall.sh sudowoodo.sh
 ./firewall.sh -s
 service iptables save
 echo "Progress!"
+echo "Now for packages"
+yum install -y -q epel-release clamav
+yum list installed | grep clamav
+yum list installed | grep epel-release

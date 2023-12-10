@@ -28,5 +28,4 @@ case $2 in
   x) secret_funct $1;;
   "") menu;;
   *) menu;;
-;;
 esac

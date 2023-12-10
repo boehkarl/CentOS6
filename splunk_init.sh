@@ -7,8 +7,9 @@ curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/sudowoodo.sh" >> s
 chmod 755 repos.sh firewall.sh sudowoodo.sh
 echo "Progress!"
 echo "Now for packages"
-yum install -y -q epel-release clamav
-yum list installed | grep clamav
+yum install -y -q epel-release
+yum install -y -q clamav
 yum list installed | grep epel-release
+yum list installed | grep clamav
 ./firewall.sh -s
 service iptables save

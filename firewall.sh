@@ -131,10 +131,10 @@ allowSysLog(){
 setSplunk(){
   flushFirewall  #Flush all the bad rules
   #set loopback rules
-  iptables -A INPUT -i lo -j ACCEPT
-  iptables -A OUTPUT -o lo -j ACCEPT
+  #iptables -A INPUT -i lo -j ACCEPT
+  #iptables -A OUTPUT -o lo -j ACCEPT
   #HTTP and HTTPS
-  iptables -A INPUT -p tcp --dport 80 -j ACCEPT   #Defining an interface is typically not required, but if you only want access from your machine, the loopback adapter may be more appropriate.
+  iptables -A INPUT -p tcp --dport 80 -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
   iptables -A INPUT -p tcp --dport 443 -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT

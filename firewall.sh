@@ -159,7 +159,7 @@ setSplunk(){
   iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j DROP
 
   #allowSysLog   # Opens the required ports for syslogs to be forwarded to datalake
-  #dropAll
+  dropAll
   showFirewall
 }
 

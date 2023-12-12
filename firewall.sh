@@ -139,9 +139,7 @@ setSplunk(){
   iptables -A OUTPUT -o lo -j ACCEPT
 
   # HTTP & HTTPS rules 
-  iptables -A INPUT -p tcp --sport 80 -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
-  iptables -A INPUT -p tcp --sport 443 -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 
   # Splunk WebGUI rules 

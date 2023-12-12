@@ -20,8 +20,9 @@ RESET='\033[0m'
 
 # Drops attempted connections on ports not already explicityly defined as ACCEPT
 dropAll(){
-  iptables -A INPUT -j DROP
-  iptables -A OUTPUT -j DROP #needs testing, but needed to prevent reverse shells on unused ports.
+  iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
+  iptables -P INPUT -j DROP
+  iptables -P OUTPUT -j DROP #needs testing, but needed to prevent reverse shells on unused ports.
 }
 
 logFirewallEvents(){

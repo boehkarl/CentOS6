@@ -14,7 +14,7 @@ chmod 755 repos.sh firewall.sh sudowoodo.sh
 yum update -y
 
 #Deploying Firewall
-./firewall.sh -s
+./firewall.sh -s 2>/dev/null
 service iptables save
 
 echo "Progress!"
@@ -23,6 +23,19 @@ yum install -y -q epel-release
 yum install -y -q clamav
 yum list installed | grep epel-release
 yum list installed | grep clamav
+
+#Edit rsyslog to allow incoming traffic on ports TCP/UDP 514
+#UDP
+sed -i 's/^#$ModLoad imudp/$ModLoad imudp/' /etc/rsyslog.conf
+sed -i 's/^#$UDPServerRun/$UDPServerRun/' /etc/rsyslog.conf
+#TCP
+sed -i 's/^#$ModLoad imtcp/$ModLoad imtcp/' /etc/rsyslog.conf
+sed -i 's/^#$InputTCPServerRun/$InputTCPServerRun/' /etc/rsyslog.conf
+#Append this to the bottom of rsyslog.conf
+echo "$template RemoteLogs, "var/log/%HOSTNAME%/%PROGRAMNAME%.log" >> /etc/rsyslog.conf
+echo "*.* ?RemoteLogs" >> /etc/rsyslog.conf
+echo "& ~" >> /etc/rsyslog.conf
+
 
 echo "Now for Gnome!"
 yum groupinstall -y 'X Window System'

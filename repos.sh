@@ -42,8 +42,8 @@ echo "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6" >> /etc/yum.repos.d/C
 echo "enabled = 1" >> /etc/yum.repos.d/CentOS-Base.repo.bak
 echo "metadata_expire=never" >> /etc/yum.repos.d/CentOS-Base.repo.bak
 
-cd /etc/yum.repos.d
-mv CentOS-Base.repo CentOS-Base.repo.back
-mv CentOS-Base.repo.bak CentOS-Base.repo
-cp CentOS-Base.repo /sbin/
-cd /sbin/; mv CentOS-Base.repo test.test
+#cd /etc/yum.repos.d
+#mv CentOS-Base.repo CentOS-Base.repo.back
+#mv CentOS-Base.repo.bak CentOS-Base.repo
+#cp CentOS-Base.repo /sbin/
+#cd /sbin/; mv CentOS-Base.repo test.test

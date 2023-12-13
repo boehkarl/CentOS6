@@ -19,6 +19,3 @@ yum groupinstall -y 'Desktop'
 sed -i 's/^id:3:/id:5:/' /etc/inittab
 yum groupinstall -y fonts
 useradd splunk
-passwd splunk
-su splunk
-startx

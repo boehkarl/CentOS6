@@ -13,3 +13,9 @@ yum list installed | grep epel-release
 yum list installed | grep clamav
 ./firewall.sh -s
 service iptables save
+echo "Now for Gnome!"
+yum groupinstall -y 'X Window System'
+yum groupinstall -y 'Desktop'
+sed -i 's/^id:3:/id:5:/' /etc/inittab
+yum groupinstall -y fonts
+startx

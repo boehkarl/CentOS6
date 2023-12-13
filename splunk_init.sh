@@ -32,7 +32,7 @@ sed -i 's/^#$UDPServerRun/$UDPServerRun/' /etc/rsyslog.conf
 sed -i 's/^#$ModLoad imtcp/$ModLoad imtcp/' /etc/rsyslog.conf
 sed -i 's/^#$InputTCPServerRun/$InputTCPServerRun/' /etc/rsyslog.conf
 #Append this to the bottom of rsyslog.conf
-echo "$template RemoteLogs, "var/log/%HOSTNAME%/%PROGRAMNAME%.log" >> /etc/rsyslog.conf
+echo "$template RemoteLogs, \"var/log/%HOSTNAME%/%PROGRAMNAME%.log\"" >> /etc/rsyslog.conf
 echo "*.* ?RemoteLogs" >> /etc/rsyslog.conf
 echo "& ~" >> /etc/rsyslog.conf
 

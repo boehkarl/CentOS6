@@ -157,7 +157,10 @@ setSplunk(){
   iptables -A INPUT -p udp --dport 514 -j ACCEPT
 
   #allowSysLog   # Opens the required ports for syslogs to be forwarded to datalake
-  dropAll
+  #dropAll
+  iptables -P FORWARD DROP
+  iptables -P INPUT DROP
+  iptables -P OUTPUT DROP
   showFirewall
 }
 

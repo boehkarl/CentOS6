@@ -133,22 +133,18 @@ setSplunk(){
   flushFirewall  #Flush all the bad rules
   
   # ensure loopback is good
-
+  iptables -A INPUT -i lo -j ACCEPT
+  iptables -A OUTPUT -o lo -j ACCEPT
+  
   iptables --policy INPUT DROP
   iptables --policy FORWARD DROP
   iptables --policy OUTPUT DROP
   iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  iptables -A OUTPUT -p udp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT 
   iptables -A OUTPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
   iptables -A OUTPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-  
-  iptables -A INPUT -i lo -j ACCEPT
-  iptables -A OUTPUT -o lo -j ACCEPT
-  
-  #iptables -A INPUT -i eth0 -p tcp --sport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-  #iptables -A OUTPUT -o eth0 -p tcp --dport 80 -m state --state ESTABLISHED -j ACCEPT
-  #iptables -A INPUT -i eth0 -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
-  #iptables -A OUTPUT -o eth0 -p tcp --dport 443 -m state --state ESTABLISHED -j ACCEPT
   
   # Splunk WebGUI rules 
   iptables -A INPUT -p tcp --dport 8000 -j ACCEPT

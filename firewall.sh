@@ -132,23 +132,24 @@ allowSysLog(){
 setSplunk(){
   flushFirewall  #Flush all the bad rules
   
-  # ensure loopback is good 
+  # ensure loopback is good
+
+  iptables --policy INPUT DROP
+  iptables --policy FORWARD DROP
+  iptables --policy OUTPUT DROP
+  iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  iptables -A OUTPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  
   iptables -A INPUT -i lo -j ACCEPT
   iptables -A OUTPUT -o lo -j ACCEPT
   
-  iptables -A INPUT -i eth0 -p tcp --sport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-  iptables -A OUTPUT -o eth0 -p tcp --dport 80 -m state --state ESTABLISHED -j ACCEPT
-  iptables -A INPUT -i eth0 -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
-  iptables -A OUTPUT -o eth0 -p tcp --dport 443 -m state --state ESTABLISHED -j ACCEPT
+  #iptables -A INPUT -i eth0 -p tcp --sport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+  #iptables -A OUTPUT -o eth0 -p tcp --dport 80 -m state --state ESTABLISHED -j ACCEPT
+  #iptables -A INPUT -i eth0 -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+  #iptables -A OUTPUT -o eth0 -p tcp --dport 443 -m state --state ESTABLISHED -j ACCEPT
   
-  #These are broken
-  # HTTP & HTTPS rules
-  #iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-  #iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-  #iptables -A OUTPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-  #iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
-  #iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
-
   # Splunk WebGUI rules 
   iptables -A INPUT -p tcp --dport 8000 -j ACCEPT
   iptables -A OUTPUT -p tcp --sport 8000 -j ACCEPT
@@ -163,13 +164,10 @@ setSplunk(){
   iptables -A INPUT -p udp --dport 514 -j ACCEPT
   
   #Allow established connections
-  iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
+  #iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
   
   #allowSysLog   # Opens the required ports for syslogs to be forwarded to datalake
-  #dropAll
-  iptables --policy INPUT DROP
-  iptables --policy FORWARD DROP
-  iptables --policy OUTPUT DROP
+
   showFirewall
 }
 

@@ -13,10 +13,6 @@ chmod 755 repos.sh firewall.sh sudowoodo.sh
 ./repos.sh
 yum update -y
 
-#Deploying Firewall
-./firewall.sh -s 2>/dev/null
-service iptables save
-
 echo "Progress!"
 echo "Now for packages"
 yum install -y -q epel-release
@@ -44,4 +40,9 @@ yum groupinstall -y 'X Window System'
 yum groupinstall -y 'Desktop'
 sed -i 's/^id:3:/id:5:/' /etc/inittab
 yum groupinstall -y fonts
+
+#Deploying Firewall
+./firewall.sh -s 2>/dev/null
+service iptables save
+
 reboot -f

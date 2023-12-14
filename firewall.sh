@@ -131,17 +131,17 @@ allowSysLog(){
 
 setSplunk(){
   flushFirewall  #Flush all the bad rules
-
+  iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
   # ensure loopback is good 
   iptables -A INPUT -i lo -j ACCEPT
   iptables -A OUTPUT -o lo -j ACCEPT
 
   # HTTP & HTTPS rules
-  iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-  iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-  iptables -A OUTPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-  #iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
-  #iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
+  #iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  #iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  #iptables -A OUTPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 
   # Splunk WebGUI rules 
   iptables -A INPUT -p tcp --dport 8000 -j ACCEPT

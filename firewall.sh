@@ -24,7 +24,6 @@ dropAll(){
   iptables --policy INPUT DROP
   iptables --policy FORWARD DROP
   iptables --policy OUTPUT DROP
-  
 }
 
 logFirewallEvents(){
@@ -127,7 +126,7 @@ setPaloWS(){
 allowSysLog(){
   iptables -A OUTPUT -p tcp --dport 9997 -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 9998 -j ACCEPT
-  iptables -A OUTPUT -p tcp --dport 514 -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 601 -j ACCEPT
   iptables -A OUTPUT -p udp --dport 514 -j ACCEPT
 }
 
@@ -137,9 +136,11 @@ setSplunk(){
   # ensure loopback is good
   iptables -A INPUT -i lo -j ACCEPT
   iptables -A OUTPUT -o lo -j ACCEPT
+  
   #DNS
   iptables -A OUTPUT -p tcp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
   iptables -A OUTPUT -p udp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT 
+  
   #Web traffic
   iptables -A OUTPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
@@ -147,6 +148,7 @@ setSplunk(){
   
   # Splunk WebGUI rules 
   iptables -A INPUT -p tcp --dport 8000 -j ACCEPT
+  iptables -A OUTPUT -p tcp --sport 8000 -j ACCEPT
 
   # Splunk Management Port
   iptables -A INPUT -p tcp --dport 8089 -j ACCEPT
@@ -154,10 +156,10 @@ setSplunk(){
   # Syslog traffic
   iptables -A INPUT -p tcp --dport 9997 -j ACCEPT
   iptables -A INPUT -p tcp --dport 9998 -j ACCEPT
-  iptables -A INPUT -p tcp --dport 514 -j ACCEPT
+  iptables -A INPUT -p tcp --dport 601 -j ACCEPT
   iptables -A INPUT -p udp --dport 514 -j ACCEPT
   
-  #allowSysLog   # Opens the required ports for syslogs to be forwarded to datalake
+  allowSysLog
   dropall
   showFirewall
 }

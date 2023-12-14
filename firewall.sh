@@ -20,7 +20,6 @@ RESET='\033[0m'
 
 # Drops attempted connections on ports not already explicityly defined as ACCEPT
 dropAll(){
-  iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
   iptables -P FORWARD DROP
   iptables -P INPUT DROP
   iptables -P OUTPUT DROP
@@ -137,9 +136,12 @@ setSplunk(){
   iptables -A INPUT -i lo -j ACCEPT
   iptables -A OUTPUT -o lo -j ACCEPT
 
-  # HTTP & HTTPS rules 
-  iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
-  iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
+  # HTTP & HTTPS rules
+  iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  iptables -A OUTPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  #iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
+  #iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 
   # Splunk WebGUI rules 
   iptables -A INPUT -p tcp --dport 8000 -j ACCEPT

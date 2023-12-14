@@ -166,9 +166,9 @@ setSplunk(){
   iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
   
   #allowSysLog   # Opens the required ports for syslogs to be forwarded to datalake
-  dropAll
-  #iptables -P FORWARD DROP
-  #iptables -P INPUT DROP
+  #dropAll
+  iptables -P FORWARD DROP
+  iptables -P INPUT DROP
   #iptables -P OUTPUT DROP
   showFirewall
 }

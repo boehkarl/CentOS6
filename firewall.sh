@@ -20,9 +20,11 @@ RESET='\033[0m'
 
 # Drops attempted connections on ports not already explicityly defined as ACCEPT
 dropAll(){
-  iptables -P FORWARD DROP
-  iptables -P INPUT DROP
-  iptables -P OUTPUT DROP
+  iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  iptables --policy INPUT DROP
+  iptables --policy FORWARD DROP
+  iptables --policy OUTPUT DROP
+  
 }
 
 logFirewallEvents(){
@@ -135,13 +137,10 @@ setSplunk(){
   # ensure loopback is good
   iptables -A INPUT -i lo -j ACCEPT
   iptables -A OUTPUT -o lo -j ACCEPT
-  
-  iptables --policy INPUT DROP
-  iptables --policy FORWARD DROP
-  iptables --policy OUTPUT DROP
-  iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  #DNS
   iptables -A OUTPUT -p tcp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
   iptables -A OUTPUT -p udp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT 
+  #Web traffic
   iptables -A OUTPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
   iptables -A OUTPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
@@ -159,11 +158,8 @@ setSplunk(){
   iptables -A INPUT -p tcp --dport 514 -j ACCEPT
   iptables -A INPUT -p udp --dport 514 -j ACCEPT
   
-  #Allow established connections
-  #iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
-  
   #allowSysLog   # Opens the required ports for syslogs to be forwarded to datalake
-
+  dropall
   showFirewall
 }
 

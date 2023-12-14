@@ -22,7 +22,7 @@ RESET='\033[0m'
 dropAll(){
   iptables -P FORWARD DROP
   iptables -P INPUT DROP
-  iptables -P OUTPUT DROP
+  #iptables -P OUTPUT DROP
 }
 
 logFirewallEvents(){

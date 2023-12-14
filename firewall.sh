@@ -147,7 +147,6 @@ setSplunk(){
   
   # Splunk WebGUI rules 
   iptables -A INPUT -p tcp --dport 8000 -j ACCEPT
-  iptables -A OUTPUT -p tcp --sport 8000 -j ACCEPT
 
   # Splunk Management Port
   iptables -A INPUT -p tcp --dport 8089 -j ACCEPT

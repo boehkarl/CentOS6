@@ -21,9 +21,9 @@ echo "Now for packages"
 yum install -y -q epel-release
 yum install -y -q clamav
 yum install -y firefox
-yum install -y ntp
+yum install -y wget
 
-yum list installed | grep -E 'epel-release|clamav|firefox|ntp'
+yum list installed | grep -E 'epel-release|clamav|firefox|wget'
 
 #Edit rsyslog to allow incoming traffic on ports TCP/UDP 514
 #UDP

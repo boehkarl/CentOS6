@@ -147,11 +147,19 @@ setSplunk(){
   iptables -A OUTPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
   
   # Splunk WebGUI rules 
-  iptables -A INPUT -p tcp --dport 8000 -j ACCEPT
-  iptables -A OUTPUT -p tcp --sport 8000 -j ACCEPT
+  iptables -A INPUT -p tcp --dport 8000 -j ACCEPT  #See note on management port
+  iptables -A OUTPUT -p tcp --sport 8000 -j ACCEPT 
 
   # Splunk Management Port
-  iptables -A INPUT -p tcp --dport 8089 -j ACCEPT
+  iptables -A INPUT -p tcp --dport 8089 -j ACCEPT  #This opens up the management port to EVERYONE
+                                                   #A safer option would be to specify an IP or 
+                                                   #range of IPs allowed to use this port. See
+                                                   #the next 2 (commented) lines for an example
+                                                   #Alternatively, you could define the loopback
+                                                   #interface here to only allow you access.
+                                                   
+  #read -p "Enter your IP address " sip                                               
+  #iptables -A INPUT -p tcp --dport 8089 -d $sip -j ACCEPT
 
   # Syslog traffic
   iptables -A INPUT -p tcp --dport 9997 -j ACCEPT
@@ -211,3 +219,4 @@ done
 
 # logFirewallEvents was stolen from previous MetroCCDC scripts & still needs testing ~ DW
 # setPaloWS needs to be tested ~ NO
+

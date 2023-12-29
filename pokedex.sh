@@ -93,6 +93,8 @@ allowClientSysLog(){
 
 allowICMP(){
   iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+  iptables -A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
+  iptables -A OUTPUT -p icmp --icmp-type echo-request -j ACCEPT
   iptables -A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
 }
 
@@ -165,12 +167,32 @@ setSplunk(){
   iptables -A INPUT -p tcp --dport 9998 -j ACCEPT
   iptables -A INPUT -p tcp --dport 601 -j ACCEPT
   iptables -A INPUT -p udp --dport 514 -j ACCEPT
+
+  #Uncomment line below if Splunk ends up on CentOS7
+  #saveIPrulesCent
   
+  showFirewall
+}
+
+setEcomm(){
+  flushFirewall  #Removes any potentially bad rules
+  logFirewallEvents
+  defaultPolicy
+  allowWebBrowsing
+  allowICMP
+  allowDNSNTPclient
+
+  # Rules specific for E-comm
+  iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+  iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
   saveIPrulesCent
   showFirewall
 }
 
-while getopts 'cdfijs :' OPTION; do
+while getopts 'cdefijs :' OPTION; do
   case "$OPTION" in
     c)
       echo "Appling firewall rules for Splunk server..."
@@ -180,6 +202,10 @@ while getopts 'cdfijs :' OPTION; do
       echo "Appling firewall rules for DNS-NTP..."
       setDNS-NTP
       echo "/root/PoshFish-ForTheWin/rare_candy.sh -b" >> /etc/profile
+      ;;
+    e)
+      echo "Appling firewall rules for E-comm..."
+      setEcomm
       ;;
     f)
       echo "Removing all firewall rules..."
@@ -211,6 +237,7 @@ while getopts 'cdfijs :' OPTION; do
       echo -e "Correct usage:\t $(basename $0) -flag(s)"
       echo -e "-c\t Applies firewall rules for Splunk server"
       echo -e "-d\t Applies firewall rules for DNS/NTP"
+      echo -e "-e\t Applies firewall rules for E-Comm"
       echo -e "-f\t Deletes all firewall rules"
       echo -e "-i\t Applies firewall rules for HIDS clients"
       echo -e "-j\t Applies firewall rules for HIDS server"

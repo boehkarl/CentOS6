@@ -45,4 +45,9 @@ yum groupinstall -y 'Desktop'
 sed -i 's/^id:3:/id:5:/' /etc/inittab
 yum groupinstall -y fonts
 
+cd /sbin
+tar -czf etc_backup_rename.tar.gz /etc
+tar -czf var_backup_rename.tar.gz /var/log
+tar -czf bin_backup_rename.tar.gz /bin
+
 reboot -f

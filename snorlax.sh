@@ -2,18 +2,20 @@
 echo "Setting stuff up"
 echo "Grabbing scripts"
 
-#These might be pulled from someone over the network
-curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/repos.sh" >> repos.sh
-curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/pokedex.sh" >> firewall.sh
-chmod 755 repos.sh firewall.sh
+#Hopefully, a team member can pull this script down immediately and you can pull it over with SCP in the first minutes.
+#Otherwise, you will need to manually change the repos and run yum update -y before pulling this script over with
+#curl. There is an SSL error for pulling from github on the version of curl that comes on CentOS6.4.
 
-#If it is possible to pull splunk_init immediately before changing repos
-#uncomment the following lines
+curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/repos.sh" >> repos.sh
+curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/pokedex.sh" >> pokedex.sh
+chmod 755 repos.sh pokedex.sh
+
 ./repos.sh
 yum update -y
 
+
 #Deploying Firewall
-./firewall.sh -s 2>/dev/null
+./pokedex.sh -c 2>/dev/null
 service iptables save
 
 echo "Now for packages"
@@ -22,7 +24,7 @@ yum install -y -q clamav
 yum install -y firefox
 yum install -y wget
 
-yum list installed | grep -E 'epel-release|clamav|firefox|wget'
+yum list installed | grep -E 'epel-release|clamav|firefox|wget' 2>/dev/null
 
 #Edit rsyslog to allow incoming traffic on ports TCP/UDP 514
 #UDP

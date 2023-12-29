@@ -4,9 +4,8 @@ echo "Grabbing scripts"
 
 #These might be pulled from someone over the network
 curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/repos.sh" >> repos.sh
-curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/firewall.sh" >> firewall.sh
-curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/sudowoodo.sh" >> sudowoodo.sh
-chmod 755 repos.sh firewall.sh sudowoodo.sh
+curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/pokedex.sh" >> firewall.sh
+chmod 755 repos.sh firewall.sh
 
 #If it is possible to pull splunk_init immediately before changing repos
 #uncomment the following lines

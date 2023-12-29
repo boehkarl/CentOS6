@@ -18,6 +18,9 @@ yum update -y
 ./pokedex.sh -c 2>/dev/null
 service iptables save
 
+echo "Time to change the root password"
+passwd root
+
 echo "Now for packages"
 yum install -y -q epel-release
 yum install -y -q clamav
@@ -48,9 +51,9 @@ yum groupinstall -y fonts
 #compressed files show up as red which stand out
 #think about ways to fix this and rename the backups to something less noticeable
 cd /sbin
-tar -czf etc_backup_rename.tar.gz etc/
-tar -czf var_backup_rename.tar.gz var/log/
-tar -czf bin_backup_rename.tar.gz bin/
+tar -czf etc_backup_rename.tar.gz /etc
+tar -czf var_backup_rename.tar.gz /var/log
+tar -czf bin_backup_rename.tar.gz /bin
 
 read -p "Press Enter to reboot into GUI..."
 reboot -f

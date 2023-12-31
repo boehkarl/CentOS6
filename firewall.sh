@@ -168,7 +168,7 @@ setSplunk(){
   iptables -A INPUT -p udp --dport 514 -j ACCEPT
   
   allowSysLog
-  dropall
+  dropAll
   showFirewall
 }
 

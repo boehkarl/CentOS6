@@ -1,17 +1,11 @@
+echo "[upg]" >> /etc/yum.repos.d/upgradetool.repo
+echo "name=CentOS-$releasever – Upgrade Tool" >> /etc/yum.repos.d/upgradetool.repo
+echo "baseurl=http://dev.centos.org/centos/6/upg/x86_64/" >> /etc/yum.repos.d/upgradetool.repo
+echo "gpgcheck=1" >> /etc/yum.repos.d/upgradetool.repo
+echo "enabled=1" >> /etc/yum.repos.d/upgradetool.repo
+echo "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6" >> /etc/yum.repos.d/upgradetool.repo
 
-curl https://www.getpagespeed.com/files/centos6-eol.repo --output /etc/yum.repos.d/CentOS-Base.repo
 
-echo "[upgrade]" >> /etc/yum.repos.d/upgrade.repo
-echo "name=upgrade" >> /etc/yum.repos.d/upgrade.repo
-echo "baseurl=http://buildlogs.centos.org/centos/6/upg/x86_64/" >> /etc/yum.repos.d/upgrade.repo
-echo "enabled=1" >> /etc/yum.repos.d/upgrade.repo
-echo "gpgcheck=0" >> /etc/yum.repos.d/upgrade.repo
-
-yum erase openscap -y
-yum install https://buildlogs.centos.org/centos/6/upg/x86_64/Packages/openscap-1.0.8-1.0.1.el6.centos.x86_64.rpm -y
-yum install redhat-upgrade-tool preupgrade-assistant-contentsyum install redhat-upgrade-tool preupgrade-assistant-contents -y
-
-preupg
 
 
 

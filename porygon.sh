@@ -5,7 +5,7 @@ echo "gpgcheck=1" >> /etc/yum.repos.d/upgradetool.repo
 echo "enabled=1" >> /etc/yum.repos.d/upgradetool.repo
 echo "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6" >> /etc/yum.repos.d/upgradetool.repo
 
-
+yum install redhat-upgrade-tool preupgrade-assistant-contents
 
 
 

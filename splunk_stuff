@@ -1,5 +1,8 @@
+#Splunk Enterprise 9.0.3
+wget -O splunk-9.0.3-dd0128b1f8cd-linux-2.6-x86_64.rpm "https://download.splunk.com/products/splunk/releases/9.0.3/linux/splunk-9.0.3-dd0128b1f8cd-linux-2.6-x86_64.rpm"
+
 #Red Hat 9.0.3
-wget -O splunkforwarder-9.0.3-dd0128b1f8cd-linux-2.6-x86_64.rpm "https://download.splunk.com/products/universalforwarder/releases/9.0.3/linux/splunkforwarder-9.0.3-dd0128b1f8cd-linux-2.6-x86_64.rpm"
+#wget -O splunkforwarder-9.0.3-dd0128b1f8cd-linux-2.6-x86_64.rpm "https://download.splunk.com/products/universalforwarder/releases/9.0.3/linux/splunkforwarder-9.0.3-dd0128b1f8cd-linux-2.6-x86_64.rpm"
 
 #Debian 9.0.3
-wget -O splunkforwarder-9.0.3-dd0128b1f8cd-linux-2.6-amd64.deb "https://download.splunk.com/products/universalforwarder/releases/9.0.3/linux/splunkforwarder-9.0.3-dd0128b1f8cd-linux-2.6-amd64.deb"
+#wget -O splunkforwarder-9.0.3-dd0128b1f8cd-linux-2.6-amd64.deb "https://download.splunk.com/products/universalforwarder/releases/9.0.3/linux/splunkforwarder-9.0.3-dd0128b1f8cd-linux-2.6-amd64.deb"

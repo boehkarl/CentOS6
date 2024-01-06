@@ -7,7 +7,7 @@ echo "Grabbing scripts"
 #curl. There is an SSL error for pulling from github on the version of curl that comes on CentOS6.4.
 
 curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/repos.sh" >> repos.sh
-curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/firewall.sh" >> pokedex.sh
+curl "https://raw.githubusercontent.com/boehkarl/CentOS6/main/firewall.sh" >> firewall.sh
 chmod 755 repos.sh firewall.sh
 
 ./repos.sh

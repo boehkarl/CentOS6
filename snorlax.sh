@@ -25,17 +25,17 @@ echo "Now for packages"
 yum install -y -q epel-release
 yum install -y -q clamav
 yum install -y firefox
-yum install -y wget
+yum install -y tcpdump
 
-yum list installed | grep -E 'epel-release|clamav|firefox|wget' 2>/dev/null
+yum list installed | grep -E 'epel-release|clamav|firefox|tcpdump' 2>/dev/null
 
 #Edit rsyslog to allow incoming traffic on ports TCP/UDP 514
 #UDP
 sed -i 's/^#$ModLoad imudp/$ModLoad imudp/' /etc/rsyslog.conf
-sed -i 's/^#$UDPServerRun/$UDPServerRun/' /etc/rsyslog.conf
+sed -i 's/^#$UDPServerRun 514/$UDPServerRun 1514/' /etc/rsyslog.conf
 #TCP
 sed -i 's/^#$ModLoad imtcp/$ModLoad imtcp/' /etc/rsyslog.conf
-sed -i 's/^#$InputTCPServerRun 514/$InputTCPServerRun 601/' /etc/rsyslog.conf
+sed -i 's/^#$InputTCPServerRun 514/$InputTCPServerRun 1601/' /etc/rsyslog.conf
 #Append this to the bottom of rsyslog.conf
 echo "\$template RemoteLogs, \"var/log/%HOSTNAME%/%PROGRAMNAME%.log\"" >> /etc/rsyslog.conf
 echo "*.* ?RemoteLogs" >> /etc/rsyslog.conf

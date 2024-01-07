@@ -126,8 +126,8 @@ setPaloWS(){
 allowSysLog(){
   iptables -A OUTPUT -p tcp --dport 9997 -j ACCEPT
   iptables -A OUTPUT -p tcp --dport 9998 -j ACCEPT
-  iptables -A OUTPUT -p tcp --dport 1601 -j ACCEPT
-  iptables -A OUTPUT -p udp --dport 1514 -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 601 -j ACCEPT
+  iptables -A OUTPUT -p udp --dport 514 -j ACCEPT
 }
 
 setSplunk(){
@@ -162,8 +162,8 @@ setSplunk(){
   # Syslog traffic
   iptables -A INPUT -p tcp --dport 9997 -j ACCEPT
   iptables -A INPUT -p tcp --dport 9998 -j ACCEPT
-  iptables -A INPUT -p tcp --dport 1601 -j ACCEPT
-  iptables -A INPUT -p udp --dport 1514 -j ACCEPT
+  iptables -A INPUT -p tcp --dport 601 -j ACCEPT
+  iptables -A INPUT -p udp --dport 514 -j ACCEPT
   
   allowSysLog
   dropAll

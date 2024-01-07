@@ -29,7 +29,7 @@ yum install -y tcpdump
 
 yum list installed | grep -E 'epel-release|clamav|firefox|tcpdump' 2>/dev/null
 
-#Edit rsyslog to allow incoming traffic on ports TCP/UDP 514
+#Edit rsyslog to allow incoming traffic on ports TCP 1601/UDP 1514
 #UDP
 sed -i 's/^#$ModLoad imudp/$ModLoad imudp/' /etc/rsyslog.conf
 sed -i 's/^#$UDPServerRun 514/$UDPServerRun 1514/' /etc/rsyslog.conf

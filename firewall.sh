@@ -151,12 +151,8 @@ setSplunk(){
   iptables -A OUTPUT -p tcp --sport 8000 -j ACCEPT 
 
   # Splunk Management Port
-  iptables -A INPUT -p tcp --dport 8089 -j ACCEPT  #This opens up the management port to EVERYONE
-                                                   #A safer option would be to specify an IP or 
-                                                   #range of IPs allowed to use this port. See
-                                                   #the next 2 (commented) lines for an example
-                                                   #Alternatively, you could define the loopback
-                                                   #interface here to only allow you access.
+  iptables -A INPUT -p tcp --dport 8089 -j ACCEPT
+  iptables -A OUTPUT -p tcp --dport 8089 -j ACCEPT
                                                    
 
   # Syslog traffic

@@ -147,19 +147,18 @@ setSplunk(){
   iptables -A OUTPUT -p udp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
   
   # Splunk WebGUI rules 
-  iptables -A INPUT -p tcp --dport 8000 -j ACCEPT  #See note on management port
-  iptables -A OUTPUT -p tcp --sport 8000 -j ACCEPT 
+  iptables -A INPUT -i eth0 -p tcp --dport 8000 -m state --state NEW,ESTABLISHED -j ACCEPT
+  iptables -A OUTPUT -o eth0 -p tcp --sport 8000 -m state --state ESTABLISHED -j ACCEPT
 
   # Splunk Management Port
-  iptables -A INPUT -p tcp --dport 8089 -j ACCEPT
-  iptables -A OUTPUT -p tcp --dport 8089 -j ACCEPT
-                                                   
+  iptables -A INPUT -i eth0 -p tcp --dport 8089 -m state --state NEW,ESTABLISHED -j ACCEPT
 
+                                                  
   # Syslog traffic
-  iptables -A INPUT -p tcp --dport 9997 -j ACCEPT
-  iptables -A INPUT -p tcp --dport 9998 -j ACCEPT
-  iptables -A INPUT -p tcp --dport 601 -j ACCEPT
-  iptables -A INPUT -p udp --dport 514 -j ACCEPT
+  iptables -A INPUT -i eth0 -p tcp --dport 9997 -m state --state NEW,ESTABLISHED -j ACCEPT
+  iptables -A INPUT -i eth0 -p tcp --dport 9998 -m state --state NEW,ESTABLISHED -j ACCEPT
+  iptables -A INPUT -i eth0 -p tcp --dport 601 -m state --state NEW,ESTABLISHED -j ACCEPT
+  iptables -A INPUT -i eth0 -p udp --dport 514 -m state --state NEW,ESTABLISHED -j ACCEPT
   
   allowSysLog
   dropAll

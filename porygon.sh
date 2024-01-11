@@ -89,5 +89,10 @@ repos(){
   cd /sbin/; mv CentOS-Base.repo test.test
 }
 
+case $1 in
+  f) firewall;;
+  r) repos;;
+esac
+  
 
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-wget -O splunk-9.1.1-64e843ea36b1-x64-release.msi "https://download.splunk.com/products/splunk/releases/9.1.1/windows/splunk-9.1.1-64e843ea36b1-x64-release.msi"
+wget -O splunk-9.1.1-64e843ea36b1.x86_64.rpm "https://download.splunk.com/products/splunk/releases/9.1.1/linux/splunk-9.1.1-64e843ea36b1.x86_64.rpm"
 
 #Splunk Enterprise 9.0.3
 #wget -O splunk-9.0.3-dd0128b1f8cd-linux-2.6-x86_64.rpm "https://download.splunk.com/products/splunk/releases/9.0.3/linux/splunk-9.0.3-dd0128b1f8cd-linux-2.6-x86_64.rpm"
